@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog :: Post</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f4f7f6; /* Light gray background */
+            color: #333;
+            line-height: 1.7;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: #777;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff9800; /* Orange hover */
+        }
+
+        nav .home-icon {
+            font-size: 1.2rem;
+        }
+
+        nav .auth-buttons button {
+            background-color: #ff9800; /* Orange buttons */
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-left: 1rem;
+        }
+
+        nav .auth-buttons button:hover {
+            background-color: #f57c00; /* Darker orange hover */
+            transform: translateY(-1px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-title {
+            color: #333;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .post-meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .post-meta i {
+            margin-right: 0.3rem;
+        }
+
+        .post-content {
+            color: #444;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-wrap; /* Preserve line breaks */
+        }
+
+        .post-actions {
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        .post-actions a {
+            color: #ff9800; /* Orange */
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            border: 1px solid #ff9800;
+            transition: background-color 0.3s, color 0.3s;
+            margin-left: 0.5rem;
+        }
+
+        .post-actions a:hover {
+            background-color: #ff9800;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a th:href="@{/}" class="home-icon"><i class="fas fa-home"></i></a>
+    <div class="auth-buttons">
+        <a th:href="@{/login}"><button>Login</button></a>
+        <a th:href="@{/register}"><button>Register</button></a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="post-header">
+        <h1 class="post-title" th:text="${post.title}">Post Title</h1>
+        <p class="post-meta">
+            <i class="fas fa-calendar-alt"></i> <span th:text="'Created on ' + ${#dates.format(post.createdAt, 'dd-MMM-yyyy')}"></span>
+            <i class="fas fa-user"></i> <span th:text="'by ' + ${post.account.firstName}"></span>
+        </p>
+        <img th:src="@{'/images/' + ${post.imageFilePath}}" alt="Blog Post Image" class="post-image" />
+    </div>
+    <div class="post-content" th:text="${post.body}">
+    </div>
+    <div sec:authorize="isAuthenticated()" class="post-actions">
+        <a th:href="@{'/posts/' + ${post.id} + '/edit'}">Edit</a>
+        <a th:href="@{'/posts/' + ${post.id} + '/delete'}" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a>
+    </div>
+</div>
+
+</body>
+</html>

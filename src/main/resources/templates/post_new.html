@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog :: New Post</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f4f7f6; /* Light gray background */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        nav a {
+            color: #777;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff9800; /* Orange hover */
+        }
+
+        nav .home-icon {
+            font-size: 1.2rem;
+        }
+
+        nav .auth-buttons button {
+            background-color: #ff9800; /* Orange buttons */
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-left: 1rem;
+        }
+
+        nav .auth-buttons button:hover {
+            background-color: #f57c00; /* Darker orange hover */
+            transform: translateY(-1px);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        input[type="file"]:focus {
+            border-color: #ff9800; /* Orange focus */
+            outline: none;
+            box-shadow: 0 2px 4px rgba(255, 152, 0, 0.2);
+        }
+
+        textarea {
+            min-height: 150px;
+        }
+
+        input[type="file"] {
+            padding: 0.7rem;
+        }
+
+        button[type="submit"] {
+            background-color: #ff9800; /* Orange */
+            color: white;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button[type="submit"]:hover {
+            background-color: #f57c00; /* Darker orange hover */
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-top: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a th:href="@{/}" class="home-icon"><i class="fas fa-home"></i></a>
+    <div class="auth-buttons">
+        <a th:href="@{/login}"><button>Login</button></a>
+        <a th:href="@{/register}"><button>Register</button></a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Write New Post</h2>
+    <form action="#"
+          th:action="@{/posts/new}"
+          th:object="${post}"
+          enctype="multipart/form-data"
+          method="post">
+        <input type="hidden" th:field="*{createdAt}" />
+
+        <div class="form-group">
+            <label for="input-file">Featured Image</label>
+            <input id="input-file" type="file" name="file" class="form-control" accept="image/png, image/jpeg, image/jpg, image/bmp" onchange="previewImage(this)" />
+            <img th:if="${post.imageFilePath}" th:src="@{'/images/' + *{imageFilePath}}" alt="Current Image" class="image-preview" style="max-height: 200px;" />
+            <img id="imagePreview" src="#" alt="Image Preview" class="image-preview" style="display: none; max-height: 200px;" />
+        </div>
+
+        <div class="form-group">
+            <label for="new-post-title">Title</label>
+            <input type="text" id="new-post-title" th:field="*{title}" class="form-control" placeholder="Enter post title" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="new-post-body">Body</label>
+            <textarea id="new-post-body" th:field="*{body}" class="form-control" placeholder="Write your post content here" rows="8" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Publish Post</button>
+    </form>
+</div>
+
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('imagePreview');
+        const currentImage = document.querySelector('.image-preview[th\\:src]');
+        const file = input.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                if (currentImage) {
+                    currentImage.style.display = 'none';
+                }
+            }
+
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+            if (currentImage) {
+                currentImage.style.display = 'block';
+            }
+        }
+    }
+</script>
+</body>
+</html>

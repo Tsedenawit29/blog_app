@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog :: Home</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f4f7f6; /* Light gray background */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: #777;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff9800; /* Orange hover */
+        }
+
+        nav .home-icon {
+            font-size: 1.2rem;
+        }
+
+        nav .auth-buttons button {
+            background-color: #ff9800; /* Orange buttons */
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-left: 1rem;
+        }
+
+        nav .auth-buttons button:hover {
+            background-color: #f57c00; /* Darker orange hover */
+            transform: translateY(-1px);
+        }
+
+        .blog-list-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            position: relative; /* For absolute positioning of the add icon */
+        }
+
+        .add-post-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff9800; /* Orange background */
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .add-post-icon:hover {
+            background-color: #f57c00; /* Darker orange hover */
+            transform: scale(1.1);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive 3-column grid */
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3); /* Orange hover shadow */
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            /* Add a subtle grayscale filter on hover for a cool effect */
+            filter: grayscale(80%);
+            transition: filter 0.3s ease;
+        }
+
+        .blog-card:hover img {
+            filter: grayscale(0%);
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute space between content elements */
+            height: calc(100% - 200px); /* Adjust height to accommodate image */
+        }
+
+        .blog-card-title {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem; /* Slightly more spacing */
+            transition: color 0.3s ease;
+        }
+
+        .blog-card-title a {
+            text-decoration: none;
+            color: inherit; /* Inherit color from parent */
+        }
+
+        .blog-card-title a:hover {
+            color: #ffb347; /* Lighter orange on title hover */
+        }
+
+        .blog-card-meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center; /* Align icons and text vertically */
+            gap: 0.5rem; /* Space between icon and text */
+        }
+
+        .blog-card-meta i {
+            font-size: 0.8rem; /* Slightly smaller icons */
+        }
+
+        .blog-card-excerpt {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 1rem; /* Add some space before "Read More" */
+        }
+
+        .blog-card-content a {
+            color: #ff9800;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            border-bottom: 1px solid transparent; /* Add subtle underline on hover */
+        }
+
+        .blog-card-content a:hover {
+            color: #f57c00;
+            border-bottom: 1px solid #f57c00;
+        }
+
+        /* Awesome additions! */
+        .blog-list-container::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 5px;
+            background: linear-gradient(to right, #ff9800, #fdd835); /* Cool gradient line */
+            border-radius: 5px;
+        }
+
+        nav .auth-buttons a:last-child button {
+            margin-left: 0.5rem; /* Add a little space between buttons */
+        }
+
+        .blog-card-meta span {
+            font-style: italic; /* Make meta text a bit more stylish */
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a th:href="@{/}" class="home-icon"><i class="fas fa-home"></i></a>
+    <div class="auth-buttons">
+        <a th:href="@{/login}"><button>Login</button></a>
+        <a th:href="@{/register}"><button>Register</button></a>
+    </div>
+</nav>
+
+<div class="blog-list-container">
+    <a th:href="@{/posts/new}" class="add-post-icon" title="Add New Post"><i class="fas fa-plus"></i></a>
+    <div class="blog-grid">
+        <div class="blog-card" th:each="post : ${posts}">
+            <img th:src="@{'/images/' + ${post.imageFilePath}}" alt="Blog Post Image" />
+            <div class="blog-card-content">
+                <div>
+                    <h2 class="blog-card-title"><a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}">Post Title</a></h2>
+                    <p class="blog-card-meta">
+                        <i class="fas fa-user"></i> <span th:text="'by ' + ${post.account.firstName}"></span>
+                        <br>
+                    </p>
+                    <p class="blog-card-excerpt" th:text="${#strings.abbreviate(post.body, 100)}">Post Excerpt...</p>
+                </div>
+                <a th:href="@{'/posts/' + ${post.id}}">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <p th:if="${posts == null or posts.isEmpty()}" style="text-align: center; margin-top: 2rem; color: #777; font-style: italic;">No blog posts yet. Stay tuned!</p>
+</div>
+
+</body>
+</html>
