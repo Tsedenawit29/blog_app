@@ -15,7 +15,7 @@ public class RegisterController {
 
     private final AccountService accountService;
 
-    @GetMapping("/api/register")
+    @GetMapping("/register")
     public String getRegisterForm(Model model) {
 
         Account account = new Account();
