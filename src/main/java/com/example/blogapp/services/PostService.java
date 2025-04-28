@@ -1,7 +1,7 @@
-package com.example.springbootblogapplication.services;
+package com.example.blogapp.services;
 
-import com.example.springbootblogapplication.models.Post;
-import com.example.springbootblogapplication.repositories.PostRepository;
+import com.example.blogapp.models.Post;
+import com.example.blogapp.repositories.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

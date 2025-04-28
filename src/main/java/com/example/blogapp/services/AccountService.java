@@ -1,9 +1,9 @@
-package com.example.springbootblogapplication.services;
+package com.example.blogapp.services;
 
-import com.example.springbootblogapplication.models.Account;
-import com.example.springbootblogapplication.models.Authority;
-import com.example.springbootblogapplication.repositories.AccountRepository;
-import com.example.springbootblogapplication.repositories.AuthorityRepository;
+import com.example.blogapp.models.Account;
+import com.example.blogapp.models.Authority;
+import com.example.blogapp.repositories.AccountRepository;
+import com.example.blogapp.repositories.AuthorityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

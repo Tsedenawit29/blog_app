@@ -1,17 +1,15 @@
-package com.example.springbootblogapplication.controllers;
+package com.example.blogapp.controllers;
 
-import com.example.springbootblogapplication.models.Account;
-import com.example.springbootblogapplication.models.Post;
-import com.example.springbootblogapplication.services.AccountService;
-import com.example.springbootblogapplication.services.FileService;
-import com.example.springbootblogapplication.services.PostService;
+import com.example.blogapp.models.Account;
+import com.example.blogapp.models.Post;
+import com.example.blogapp.services.AccountService;
+import com.example.blogapp.services.FileService;
+import com.example.blogapp.services.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,4 +1,4 @@
-package com.example.springbootblogapplication.config;
+package com.example.blogapp.config;
 
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

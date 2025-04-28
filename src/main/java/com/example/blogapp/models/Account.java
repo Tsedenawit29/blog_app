@@ -1,4 +1,4 @@
-package com.example.springbootblogapplication.models;
+package com.example.blogapp.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

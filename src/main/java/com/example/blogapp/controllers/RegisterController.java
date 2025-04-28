@@ -1,7 +1,7 @@
-package com.example.springbootblogapplication.controllers;
+package com.example.blogapp.controllers;
 
-import com.example.springbootblogapplication.models.Account;
-import com.example.springbootblogapplication.services.AccountService;
+import com.example.blogapp.models.Account;
+import com.example.blogapp.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

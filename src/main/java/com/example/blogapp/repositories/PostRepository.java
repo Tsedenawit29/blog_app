@@ -1,6 +1,6 @@
-package com.example.springbootblogapplication.repositories;
+package com.example.blogapp.repositories;
 
-import com.example.springbootblogapplication.models.Post;
+import com.example.blogapp.models.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

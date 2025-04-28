@@ -1,4 +1,4 @@
-package com.example.springbootblogapplication.config;
+package com.example.blogapp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

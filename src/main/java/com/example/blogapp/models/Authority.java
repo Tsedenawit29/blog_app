@@ -1,4 +1,4 @@
-package com.example.springbootblogapplication.models;
+package com.example.blogapp.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

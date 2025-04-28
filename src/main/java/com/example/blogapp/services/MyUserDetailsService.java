@@ -1,6 +1,6 @@
-package com.example.springbootblogapplication.services;
+package com.example.blogapp.services;
 
-import com.example.springbootblogapplication.models.Account;
+import com.example.blogapp.models.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

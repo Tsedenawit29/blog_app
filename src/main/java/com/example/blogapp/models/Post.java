@@ -1,4 +1,4 @@
-package com.example.springbootblogapplication.models;
+package com.example.blogapp.models;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
